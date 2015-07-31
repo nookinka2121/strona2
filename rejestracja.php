@@ -10,9 +10,9 @@
 
 if (isset($_POST['rejestruj']))
 {
- 
-$connection = @mysql_connect('localhost','root','');
-$db = @mysql_select_db('users', $connection);
+include 'config.php';
+$connection = @mysql_connect($tablica['localhost'], $tablica['user'], $tablica['password']);
+$db = @mysql_select_db($tablica['basename'],$connection);
 
 $query='SELECT * FROM uzytkownicy';
 
@@ -35,7 +35,7 @@ $haslo1= $_POST['haslo1'];
 }
 
  
- $sprawdz = '/^([a-z|A-Z|0-9]{4,20})@([a-z|A-Z|0-9]{2,10})\\.(pl|gr|com|op|wp)$/';
+ $sprawdz = '/^([a-z|A-Z|0-9]{4,20})@([a-z|A-Z|0-9]{2,10})\\.(pl|gr|com)$/';
 if ( !preg_match($sprawdz, $_POST["email"]) ) {
     print 'Podaj poprawny email<br>';
     $_POST["email"]=NULL;
@@ -44,11 +44,8 @@ if ( !preg_match($sprawdz, $_POST["email"]) ) {
 $email= $_POST['email'];
 }
 
-	//$login = $_POST['login'];
-	//$haslo1 = $_POST['haslo1'];
-	$haslo2 = $_POST['haslo2'];
-	//$email = $_POST['email'];
-	
+$haslo2 = $_POST['haslo2'];
+
 
   if (empty($_POST["haslo1"]) ||
         empty($_POST["haslo2"]) ||
@@ -77,3 +74,4 @@ values ('".$login."', '".$haslo1."','".$email."')";
 
 
 ?>
+<html><a href="index.php"><img src="wroc.png"/></a></html>

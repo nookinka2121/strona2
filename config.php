@@ -2,8 +2,8 @@
 <?php
 
 $tablica['localhost'] = 'localhost';
-$tablice['user'] = 'root';
+$tablica['user'] = 'root';
 $tablica['password'] = '';
-$tablica['basename']='informacje';
+$tablica['basename']='users';
 
 ?> 

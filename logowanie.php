@@ -2,8 +2,11 @@
 
 <?php
 session_start();
-$connection = @mysql_connect('localhost','root','');
-$db = @mysql_select_db('users', $connection);
+include 'config.php';
+$connection = @mysql_connect($tablica['localhost'], $tablica['user'], $tablica['password']);
+$db = @mysql_select_db($tablica['basename'],$connection);
+
+
 ?>
  
 <form method="POST" action="logowanie.php">
@@ -30,8 +33,10 @@ if (isset($_POST['loguj']))
 		$_SESSION['login'] = $login;
 		echo "Zalogowano!<br><br>";
 		
-	echo "<a href=\"sesja.php\">Moje Konto</a>";
+	echo "<a href=\"sesja.php\">Moje Konto</a><br>";
 	}
 	else echo "Wpisano zle dane.";
 }
 ?>
+<html><br>
+<a href="index.php"><img src="wroc.png"/></a><br></html>
