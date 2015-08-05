@@ -3,8 +3,8 @@
 <?php
 session_start();
 include 'config.php';
-$connection = @mysql_connect($tablica['localhost'], $tablica['user'], $tablica['password']);
-$db = @mysql_select_db($tablica['basename'],$connection);
+
+$pdo = new PDO($tablica['dns'], $tablica['user'], $tablica['password']);
 
 
 ?>
@@ -22,20 +22,23 @@ $db = @mysql_select_db($tablica['basename'],$connection);
 if (isset($_POST['loguj']))
 {
 	$login = $_POST['login'];
-	$haslo = $_POST['haslo'];
-	
- 
-	
-	if (mysql_num_rows(mysql_query("SELECT login, haslo FROM uzytkownicy WHERE login = '".$login."' AND haslo = '".$haslo."';")) > 0)
-	{
- 
-		$_SESSION['zalogowany'] = true;
-		$_SESSION['login'] = $login;
-		echo "Zalogowano!<br><br>";
-		
-	echo "<a href=\"sesja.php\">Moje Konto</a><br>";
-	}
-	else echo "Wpisano zle dane.";
+	$haslo = md5($_POST['haslo']);
+
+
+  $stmt = $pdo->prepare("SELECT * FROM uzytkownicy WHERE login=:login AND haslo=:haslo");
+    $stmt->bindValue(":login", $login, PDO::PARAM_STR);
+    $stmt->bindValue(":haslo", $haslo, PDO::PARAM_STR);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if($stmt->rowCount()!=0){
+    
+ 		$_SESSION['zalogowany'] = true; 
+ 		$_SESSION['login'] = $login; 
+ 		echo "Zalogowano!<br><br>";  		 
+	echo "<a href=\"sesja.php\">Moje Konto</a><br>"; 
+
+    }
+
 }
 ?>
 <html><br>

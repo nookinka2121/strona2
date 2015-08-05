@@ -11,10 +11,9 @@
 if (isset($_POST['rejestruj']))
 {
 include 'config.php';
-$connection = @mysql_connect($tablica['localhost'], $tablica['user'], $tablica['password']);
-$db = @mysql_select_db($tablica['basename'],$connection);
 
-$query='SELECT * FROM uzytkownicy';
+ $pdo = new PDO($tablica['dns'], $tablica['user'], $tablica['password']);
+
 
 $sprawdz = '/([a-z|A-Z|0-9]{4,20})/';
 if ( !preg_match($sprawdz, $_POST["login"]) ) {
@@ -57,8 +56,12 @@ else{
 if ($haslo1 == $haslo2) 
 		{
 		
- $query = "insert into uzytkownicy(login, haslo,email) 
-values ('".$login."', '".$haslo1."','".$email."')";
+
+           $ilosc = $pdo -> exec('INSERT INTO `uzytkownicy` (`login`, `haslo`, `email`)  VALUES(
+                \''.$_POST['login'].'\',
+                \''.md5($_POST['haslo1']).'\',  
+                \''.$_POST['email'].'\')');  
+
 
 
 			echo "Konto zostalo utworzone!";
@@ -66,8 +69,7 @@ values ('".$login."', '".$haslo1."','".$email."')";
 		else echo "Hasla nie sa takie same";
 
 }
-	$result=mysql_query($query);
-	mysql_close($connection);	
+
 	
 }
 

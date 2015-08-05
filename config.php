@@ -1,9 +1,9 @@
 
 <?php
+$tablica['dns'] = 'mysql:dbname=users;host=localhost';
 
-$tablica['localhost'] = 'mysql.cba.pl';
-$tablica['user'] = 'nookinka';
-$tablica['password'] = 'mamatata4';
-$tablica['basename']='lernen_cba_pl';
+$tablica['user'] = 'root';
+$tablica['password'] = '';
+
 
 ?> 
